@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 function parse_daily_games() {
   local -r jq_program_path="$1"
   if [[ ! -e "${jq_program_path}" ]]; then printf "${jq_program_path} is not an executable program\n" && exit 255; fi
