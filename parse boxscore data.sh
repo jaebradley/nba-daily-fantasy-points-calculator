@@ -15,14 +15,14 @@ function parse_boxscore_data() {
       statistics: .statistics
     })
   | sort_by(.name)
+  | sort_by(.status)
   | map([ 
       .name,
       .status,
       .statistics.assists,
       .statistics.blocks,
       .statistics.points,
-      .statistics.fieldGoalsMade,
-      .statistics.reboundsTotal, 
+      .statistics.reboundsTotal,
       .statistics.steals,
       .statistics.threePointersMade,
       .statistics.turnovers
