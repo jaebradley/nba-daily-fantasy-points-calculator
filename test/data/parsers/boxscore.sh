@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/../parse boxscore data.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/../../../data/parsers/boxscore.sh"
 
 function main() {
   if [[ "$#" != "1" ]]; then printf "Expected 1 argument - the path to the jq program" && exit 255; fi
@@ -14,11 +14,11 @@ function main() {
 
   for input_file_name in "${input_file_names[@]}"
   do
-    local input_file_path="${current_directory}/data/boxscores/${input_file_name}.json"
+    local input_file_path="${current_directory}/../boxscores/${input_file_name}.json"
     if [[ ! -f "${input_file_path}" ]]; then printf "Input file at ${input_file_path} is not a regular file\n" && exit 255; fi
     if [[ ! -r "${input_file_path}" ]]; then printf "Input file at ${input_file_path} is not readable\n" && exit 255; fi
 
-    local expected_output_file_path="${current_directory}/data/expected/parse boxscore data/${input_file_name}.csv"
+    local expected_output_file_path="${current_directory}/expected/boxscore/${input_file_name}.csv"
     if [[ ! -f "${expected_output_file_path}" ]]; then printf "Expected output file at ${expected_output_file_path} is not a regular file\n" && exit 255; fi
     if [[ ! -r "${expected_output_file_path}" ]]; then printf "Expected output file at ${expected_output_file_path} is not readable\n" && exit 255; fi
     local expected_output
