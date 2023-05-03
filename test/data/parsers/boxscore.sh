@@ -24,14 +24,18 @@ function main() {
     local expected_output
     expected_output=$(cat "${expected_output_file_path}")
     if [[ $? -ne 0 ]]; then printf "Could not read  boxscore data for expected output file: ${expected_output_file_path}}\n" && exit 255; fi
-    cat "${input_file_path}" | parse_boxscore_data "${jq_executable_path}" &> /tmp/foo
-    diff /tmp/foo "${expected_output_file_path}"
+    local temporary_file_name
+    temporary_file_name="/tmp/$(uuidgen)"
+    if [[ $? -ne 0 ]]; then printf "Could not generate temporary file name\n" && exit 255; fi
 
-    local calculated_output
-    calculated_output=$(cat "${input_file_path}" | parse_boxscore_data "${jq_executable_path}")
-    if [[ $? -ne 0 ]]; then printf "Could not parse boxscore data for input file: ${input_file_name}\n" && exit 255; fi
-    if [[ "${calculated_output}" !=  "${expected_output}" ]]; then printf "Calculated output does not match expected input for ${input_file_path}\n" && exit 255; fi
+    touch "${temporary_file_name}"
+    if [[ $? -ne 0 ]]; then printf "Could not create temporary file ${temporary_file_name}" && exit 255; fi
 
+    $(cat "${input_file_path}" | parse_boxscore_data "${jq_executable_path}" &> "${temporary_file_name}")
+    if [[ $? -ne 0 ]]; then printf "Could not parse boxscore data to ${temporary_file_name}" && exit 255; fi
+
+    diff "${temporary_file_name}" "${expected_output_file_path}"
+    if [[ $? -ne 0 ]]; then printf "Difference exists between ${temporary_file_name} and ${expected_output_file_path}" && exit 255; fi
   done
 }
 
