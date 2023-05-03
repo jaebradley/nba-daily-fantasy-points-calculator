@@ -1,9 +1,9 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/fetch boxscore data.sh"
-. "$(dirname "${BASH_SOURCE[0]}")/fetch games for day.sh"
-. "$(dirname "${BASH_SOURCE[0]}")/parse daily games.sh"
-. "$(dirname "${BASH_SOURCE[0]}")/parse boxscore data.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/data/accessors/boxscore.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/data/accessors/daily games.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/data/parsers/daily games.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/data/parsers/boxscore.sh"
 . "$(dirname "${BASH_SOURCE[0]}")/calculators/daily/fantasy/sports/draftkings/classic.sh"
 
 function main() {
