@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/../../../data/accessors/boxscore.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/../../../../data/accessors/boxscore.sh"
 
 main() {
   local -r boxscore_data=$(fetch_boxscore_data "0022201201")

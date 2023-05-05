@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/../../../../../../calculators/daily/fantasy/sports/draftkings/classic.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/../../../../../../../calculators/daily/fantasy/sports/draftkings/classic.sh"
 
 function main() {
   local all_zeroes_output
