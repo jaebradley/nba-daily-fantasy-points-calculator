@@ -1,0 +1,14 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  unit-tests:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: bash install.sh $(pwd)
+        shell: bash
+      - name: Execute Unit Tests
+        run: bash tests/start.sh "./tests/"
+        shell: bash

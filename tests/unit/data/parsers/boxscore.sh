@@ -1,10 +1,10 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/../../../data/parsers/boxscore.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/../../../../data/parsers/boxscore.sh"
 
 function main() {
-  if [[ "$#" != "1" ]]; then printf "Expected 1 argument - the path to the jq program" && exit 255; fi
-  local -r jq_executable_path="$1"
+  local -r jq_executable_path="$(dirname "${BASH_SOURCE[0]}")/../../../../.dependencies/bin/jq"
+  if [[ ! -x "${jq_executable_path}" ]]; then printf "Could not execute jq program at ${jq_executable_path}" && exit 255; fi
 
   local current_directory
   current_directory="$(dirname "${BASH_SOURCE[0]}")"
@@ -39,5 +39,4 @@ function main() {
   done
 }
 
-main "$@"
-
+main
