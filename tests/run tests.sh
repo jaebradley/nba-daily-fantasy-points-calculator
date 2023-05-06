@@ -13,6 +13,6 @@ run_tests() {
     sort --zero-terminated | \
     while IFS= read -r -d '' file
     do 
-      execute_test_file "${file}" || fail "Test failed for ${file}"
+      execute_test_file "${file}" || fail "Test failed for ${file}\n"
     done
 }
