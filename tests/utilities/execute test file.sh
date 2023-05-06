@@ -10,9 +10,7 @@ execute_test_file() {
     if [[ ! -f "${file_path}" ]]; then fail "File ${file_path} is not a regular file\n"; fi
     if [[ ! -x "${file_path}" ]]; then fail "File ${file_path} is not executable\n"; fi
 
-    printf "Starting ${file_path}\n"
     time "${file_path}"
     local -r exit_code="$?"
-    printf "Finished ${file_path} with exit code: ${exit_code}\n"
-    if [[ "0" != "${exit_code}" ]]; then fail "Tests failed for ${file_path}\n"; fi
+    if [[ "0" != "${exit_code}" ]]; then fail "Tests failed for ${file_path} with exit code: ${exit_code}\n"; fi
 }
