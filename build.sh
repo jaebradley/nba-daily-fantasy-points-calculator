@@ -12,7 +12,7 @@ build() {
   local -r test_directory_path="$3"
 
   install_dependencies "${jq_path}" "${expected_version}" || fail "Failed to install dependencies\n"
-  run_tests "${test_directory_path}" || fail "Failed to install dependencies\n"
+  run_tests "${test_directory_path}" || fail "Failed to run tests in ${test_directory_path}\n"
 }
 
 build "$(dirname "${BASH_SOURCE[0]}")/.dependencies/bin/jq" "jq-1.6" "$(dirname "${BASH_SOURCE[0]}")/tests"
