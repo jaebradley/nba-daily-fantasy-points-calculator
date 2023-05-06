@@ -12,6 +12,6 @@ run_tests() {
     sort --zero-terminated | \
     while IFS= read -r -d '' file
     do 
-      execute_test_file "${file}"
+      execute_test_file "${file}" || exit 255
     done
 }

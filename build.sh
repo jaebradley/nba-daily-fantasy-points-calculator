@@ -16,7 +16,7 @@ build() {
   $(install_dependencies "${jq_path}" "${expected_version}")
   if [[ $? -ne 0 ]]; then printf "Failed to install dependencies\n" && exit 255; fi
 
-  run_tests "${test_directory_path}"
+  run_tests "${test_directory_path}" || exit 255
 }
 
 build "$(dirname "${BASH_SOURCE[0]}")/.dependencies/bin/jq" "jq-1.6" "$(dirname "${BASH_SOURCE[0]}")/tests"
