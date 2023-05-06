@@ -1,8 +1,8 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE}")/utilities/execute_test_file.sh";
+. "$(dirname "${BASH_SOURCE}")/utilities/execute test file.sh";
 
-main() {
+run_tests() {
   if [[ "1" != "$#" ]]; then printf "Expected test directory path as a single argument instead of '$@'\\n" && exit 255; fi
 
   local -r test_directory_path="$1"
@@ -12,8 +12,6 @@ main() {
     sort --zero-terminated | \
     while IFS= read -r -d '' file
     do 
-      execute_test_file "$file"
+      execute_test_file "${file}"
     done
 }
-
-main "$@"

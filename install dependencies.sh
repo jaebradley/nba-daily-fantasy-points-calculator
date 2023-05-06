@@ -44,7 +44,7 @@ verify_jq_version() {
   if [[ "${expected_version}" != "${jq_version}" ]]; then printf "Expected jq version to be ${expected_version} but got ${jq_version}" && exit 255; fi
 }
 
-main() {
+install_dependencies() {
   if [[ 2 -ne $# ]]; then printf "Expected two arguments - the installation path for the jq binary and the expected jq version\n" && exit 255; fi
 
   local -r local_jq_path="$1"
@@ -69,5 +69,3 @@ main() {
   install_jq "https://github.com/stedolan/jq/releases/download/${jq_version}/jq-osx-amd64" "${local_jq_path}"
   if [[ $? -ne 0 ]]; then printf "Failed to install jq binary\n" && exit 255; fi
 }
-
-main "$(dirname "${BASH_SOURCE[0]}")/.dependencies/bin/jq" "jq-1.6"
