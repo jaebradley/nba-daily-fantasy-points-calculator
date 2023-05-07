@@ -19,8 +19,8 @@ function main() {
   compare "0" "0" "0" "0" "0" "0" "1" "-0.5" || fail "Could not calculate only turnovers"
   compare "1" "1" "1" "1" "1" "1" "1" "7.75" || fail "Could not calculate one of everything"
   compare "10" "10" "0" "0" "0" "0" "0" "36.5" || fail "Could not calculate double double"
-  compare "10" "10" "10" "0" "0" "0" "0" "49.5" || fail "Could not calculate double double"
-  compare "10" "10" "10" "10" "0" "0" "0" "62" || fail "Could not calculate double double"
+  compare "10" "10" "10" "0" "0" "0" "0" "49.5" || fail "Could not calculate triple double"
+  compare "10" "10" "10" "10" "0" "0" "0" "62" || fail "Could not calculate quadruple double"
 }
 
 main
