@@ -32,7 +32,7 @@ calculate_classic_points() {
   classic_points=$(printf "%s" "${points}+(${three_pointers_made}*0.5)+(${rebounds}*1.25)+(${assists}*1.5)+(${steals}*2)+(${blocks}*2)-(${turnovers}*0.5)+(${double_digit_categories_bonus}*1.5); scale=4" | bc)
   if [[ 0 -ne $? ]];
   then
-    fail "Unable to calculate points"
+    fail "Unable to calculate points for values: $@"
   else
     printf "%s" "${classic_points}"
   fi
