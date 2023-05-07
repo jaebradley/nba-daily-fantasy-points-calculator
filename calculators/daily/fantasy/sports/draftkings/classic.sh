@@ -1,8 +1,10 @@
 #!/bin/bash
 # https://www.draftkings.com/help/rules/4
 
-function calculate_classic_points() {
-  if [[ "$#" != "7" ]]; then printf "Expected 7 arguments: assists, blocks, points, rebounds, steals, three pointers made, and turnovers" && exit 255; fi
+. "$(dirname "${BASH_SOURCE[0]}")/../../../../../utilities/error.sh"
+
+calculate_classic_points() {
+  if [[ "$#" != "7" ]]; then fail "Expected 7 arguments: assists, blocks, points, rebounds, steals, three pointers made, and turnovers"; fi
 
   local -r assists="$1"
   local -r blocks="$2"
@@ -26,6 +28,13 @@ function calculate_classic_points() {
     double_digit_categories_bonus=3
   fi
   
-  printf "${points}+(${three_pointers_made}*0.5)+(${rebounds}*1.25)+(${assists}*1.5)+(${steals}*2)+(${blocks}*2)-(${turnovers}*0.5)+(${double_digit_categories_bonus}*1.5); scale=4" | bc
+  local classic_points
+  classic_points=$(printf "%s" "${points}+(${three_pointers_made}*0.5)+(${rebounds}*1.25)+(${assists}*1.5)+(${steals}*2)+(${blocks}*2)-(${turnovers}*0.5)+(${double_digit_categories_bonus}*1.5); scale=4" | bc)
+  if [[ 0 -ne $? ]];
+  then
+    fail "Unable to calculate points"
+  else
+    printf "%s" "${classic_points}"
+  fi
 }
 
