@@ -1,6 +1,11 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/utilities/error.sh"
+declare current_directory
+current_directory=$(dirname "${BASH_SOURCE[0]}")
+if [[ 0 -ne $? ]]; then printf "Unable to calculate the current directory" && exit 255; fi
+. "${current_directory}/utilities/error.sh"
+
+. "${current_directory}/build/shellcheck/install.sh" || fail "Unable to import shellcheck function\n"
 
 install_jq() {
   if [[ 2 -ne $# ]]; then fail "Expected two arguments: the URL for the jq binary to install and the installation location for the jq binary\n"; fi
@@ -20,7 +25,7 @@ install_jq() {
 
   local installation_directory
   installation_directory=$(dirname "${installation_location}")
-  if [[ $? -ne 0 ]]; then printf "Could not identify installation directory for: ${installation_location}\n" && exit 255; fi
+  if [[ $? -ne 0 ]]; then fail "Could not identify installation directory for: ${installation_location}\n"; fi
 
   mkdir -p "${installation_directory}" || fail "Could not create directory at path: ${installation_directory}\n"
 
@@ -42,10 +47,15 @@ verify_jq_version() {
 }
 
 install_dependencies() {
-  if [[ 2 -ne $# ]]; then fail "Expected two arguments - the installation path for the jq binary and the expected jq version\n"; fi
+  if [[ 3 -ne $# ]]; then fail "Expected three arguments - the installation path for the jq binary, the expected jq version, and the installation path for the shellcheck program\n"; fi
 
   local -r local_jq_path="$1"
   local -r jq_version="$2"
+  local -r local_shellcheck_path="$3"
+
+  # TODO: @jbradley don't reinstall shellcheck if it is already installed and has the appropriate version
+  rm -f "${local_shellcheck_path}" || fail "Failed to delete shellcheck program at ${local_shellcheck_path}"
+  install_shellcheck "https://github.com/koalaman/shellcheck/releases/download/v0.9.0/shellcheck-v0.9.0.darwin.x86_64.tar.xz" "${local_shellcheck_path}" || fail "Failed to install shellcheck program"
 
   if [[ -e "${local_jq_path}" ]];
   then
