@@ -6,6 +6,7 @@ if [[ 0 -ne $? ]]; then printf "Unable to calculate the current directory" && ex
 . "${current_directory}/utilities/error.sh"
 
 . "${current_directory}/build/shellcheck/install.sh" || fail "Unable to import shellcheck function\n"
+. "${current_directory}/build/shellcheck/verify version.sh" || fail "Unable to import shellcheck version verification function\n"
 
 install_jq() {
   if [[ 2 -ne $# ]]; then fail "Expected two arguments: the URL for the jq binary to install and the installation location for the jq binary\n"; fi
@@ -53,9 +54,12 @@ install_dependencies() {
   local -r jq_version="$2"
   local -r local_shellcheck_path="$3"
 
-  # TODO: @jbradley don't reinstall shellcheck if it is already installed and has the appropriate version
-  rm -f "${local_shellcheck_path}" || fail "Failed to delete shellcheck program at ${local_shellcheck_path}"
-  install_shellcheck "https://github.com/koalaman/shellcheck/releases/download/v0.9.0/shellcheck-v0.9.0.darwin.x86_64.tar.xz" "${local_shellcheck_path}" || fail "Failed to install shellcheck program"
+  $(verify_shellcheck_version "${local_shellcheck_path}" "0.9.0") &> /dev/null
+  if [[ 0 -ne $? ]];
+  then
+    rm -f "${local_shellcheck_path}" || fail "Failed to delete shellcheck program at ${local_shellcheck_path}"
+    install_shellcheck "https://github.com/koalaman/shellcheck/releases/download/v0.9.0/shellcheck-v0.9.0.darwin.x86_64.tar.xz" "${local_shellcheck_path}" || fail "Failed to install shellcheck program"
+  fi
 
   if [[ -e "${local_jq_path}" ]];
   then

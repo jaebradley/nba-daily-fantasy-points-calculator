@@ -1,10 +1,6 @@
 #!/bin/bash
 
-declare current_directory
-current_directory=$(dirname "${BASH_SOURCE[0]}")
-if [[ 0 -ne $? ]]; then printf "Unable to calculate the current directory" && exit 255; fi
-
-. "${current_directory}/../../utilities/error.sh" || exit 255
+. "$(dirname "${BASH_SOURCE[0]}")/../../utilities/error.sh" || exit 255
 
 
 install_shellcheck() {
