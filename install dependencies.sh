@@ -1,12 +1,9 @@
 #!/bin/bash
 
-declare current_directory
-current_directory=$(dirname "${BASH_SOURCE[0]}")
-if [[ 0 -ne $? ]]; then printf "Unable to calculate the current directory" && exit 255; fi
-. "${current_directory}/utilities/error.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/utilities/error.sh" || exit 255
 
-. "${current_directory}/build/shellcheck/install.sh" || fail "Unable to import shellcheck function\n"
-. "${current_directory}/build/shellcheck/verify version.sh" || fail "Unable to import shellcheck version verification function\n"
+. "$(dirname "${BASH_SOURCE[0]}")/build/shellcheck/install.sh" || fail "Unable to import shellcheck function\n"
+. "$(dirname "${BASH_SOURCE[0]}")/build/shellcheck/verify version.sh" || fail "Unable to import shellcheck version verification function\n"
 
 install_jq() {
   if [[ 2 -ne $# ]]; then fail "Expected two arguments: the URL for the jq binary to install and the installation location for the jq binary\n"; fi
