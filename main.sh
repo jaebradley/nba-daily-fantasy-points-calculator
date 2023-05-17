@@ -1,17 +1,17 @@
 #!/bin/bash
 
-declare file_directory
-file_directory=$(dirname "${BASH_SOURCE[0]}")
-if [[ 0 -ne $? ]]; then printf "Unable to calculate current file directory\n" && exit 255; fi
-
-. "${file_directory}/utilities/error.sh" || exit 255;
-. "${file_directory}/data/accessors/boxscore.sh" || fail "Could not import boxscore accessor"
-. "${file_directory}/data/accessors/daily games.sh" || fail "Could not import daily games accessor"
-. "${file_directory}/data/parsers/daily games.sh" || fail "Could not import daily games parser"
-. "${file_directory}/data/parsers/boxscore.sh" || fail "Could not import boxscore parser"
-. "${file_directory}/calculators/daily/fantasy/sports/draftkings/classic.sh" || fail "Could not import DraftKings classic NBA contest calculator"
+. "$(dirname "${BASH_SOURCE[0]}")/utilities/error.sh" || exit 255;
+. "$(dirname "${BASH_SOURCE[0]}")/data/accessors/boxscore.sh" || fail "Could not import boxscore accessor"
+. "$(dirname "${BASH_SOURCE[0]}")/data/accessors/daily games.sh" || fail "Could not import daily games accessor"
+. "$(dirname "${BASH_SOURCE[0]}")/data/parsers/daily games.sh" || fail "Could not import daily games parser"
+. "$(dirname "${BASH_SOURCE[0]}")/data/parsers/boxscore.sh" || fail "Could not import boxscore parser"
+. "$(dirname "${BASH_SOURCE[0]}")/calculators/daily/fantasy/sports/draftkings/classic.sh" || fail "Could not import DraftKings classic NBA contest calculator"
 
 calculate_nba_draftkings_points_for_day() {
+  local file_directory
+  file_directory=$(dirname "${BASH_SOURCE[0]}")
+  if [[ 0 -ne $? ]]; then fail "Unable to calculate current file directory\n"; fi
+
   if [[ $# -eq 3 ]]; then
     jq_executable_path="${file_directory}/.dependencies/bin/jq"
   elif [[ $# -eq 4 ]]; then
