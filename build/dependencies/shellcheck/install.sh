@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/../../utilities/error.sh" || exit 255
+. "$(dirname "${BASH_SOURCE[0]}")/../../../utilities/error.sh" || exit 255
 
 
 install_shellcheck() {
@@ -27,7 +27,7 @@ install_shellcheck() {
 
   mkdir -p "${installation_directory}" || fail "Could not create directory at path: ${installation_directory}\n"
 
-  mv "${temporary_file_path}/shellcheck-v0.9.0/shellcheck" "${installation_location}" || fail "Could not move jq binary from ${temporary_file_path} to ${installation_location}\n"
+  mv "${temporary_file_path}/shellcheck-v0.9.0/shellcheck" "${installation_location}" || fail "Could not move shellcheck binary from ${temporary_file_path} to ${installation_location}\n"
 
   chmod 755 "${installation_location}" || fail "Could not update binary permissions at ${installation_location}\n"
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/../../utilities/error.sh" || exit 255
+. "$(dirname "${BASH_SOURCE[0]}")/../../../utilities/error.sh" || exit 255
 
 verify_shellcheck_version() {
   if [[ 2 -ne $# ]]; then fail "Expected two arguments: the path to the shellcheck program and the expected shellcheck version\n"; fi
