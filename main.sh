@@ -6,6 +6,7 @@
 . "$(dirname "${BASH_SOURCE[0]}")/data/parsers/daily games.sh" || fail "Could not import daily games parser"
 . "$(dirname "${BASH_SOURCE[0]}")/data/parsers/boxscore.sh" || fail "Could not import boxscore parser"
 . "$(dirname "${BASH_SOURCE[0]}")/calculators/daily/fantasy/sports/draftkings/classic.sh" || fail "Could not import DraftKings classic NBA contest calculator"
+. "$(dirname "${BASH_SOURCE[0]}")/data/formatters/output/row.sh" || fail "Could not import row formatter"
 
 calculate_nba_draftkings_points_for_day() {
   local file_directory
@@ -35,7 +36,11 @@ calculate_nba_draftkings_points_for_day() {
       fantasy_points=$(calculate_classic_points "${player_boxscore[@]:2}")
       if [[ $? -ne 0 ]]; then fail "Could not calculate fantasy points for player with the following boxscore: ${player_boxscore}\n"; fi
 
-      printf "%b" "${player_boxscore[0]}|${fantasy_points}|${player_boxscore[1]}\n"
+      local row
+      row=$(format_output_row "${player_boxscore[0]}" "${fantasy_points}" "${player_boxscore[1]}")
+      if [[ $? -ne 0 ]]; then fail "Could not format row for player with the following boxscore: ${player_boxscore}\n"; fi
+
+      printf "%b" "${row}\n"
     done  < <(fetch_boxscore_data "${game_id}" | parse_boxscore_data "${jq_executable_path}")
   done < <(fetch_games_for_day "${year}" "${month}" "${day}" | parse_daily_games "${jq_executable_path}" | "${jq_executable_path}" 'map(.gameId) | .[]' | xargs -L1)
 }
