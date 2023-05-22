@@ -1,2 +1,3 @@
-# TODO: @jbradley enable shellcheck rules in the future
-disable=SC0-SC2147483647
+external-sources=true
+
+disable=SC1091

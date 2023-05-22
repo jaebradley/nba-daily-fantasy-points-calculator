@@ -13,17 +13,16 @@ install_shellcheck() {
   command -v "tar" &> /dev/null || fail "tar program does not exist\n"
 
   local temporary_file_path
-  temporary_file_path="/tmp/$(uuidgen)"
-  if [[ $? -ne 0 ]]; then fail "Could not generate temporary file path\n"; fi
+  if ! temporary_file_path="/tmp/$(uuidgen)"; then fail "Could not generate temporary file path\n"; fi
 
   mkdir -p "${temporary_file_path}" || fail "Could not create temporary file at path: ${temporary_file_path}\n"
-  curl --silent --location "${binary_url}" --output "${temporary_file_path}/_" || fail "Unable to download binary\n"
+  curl --silent --location "${binary_url}" --output "${temporary_file_path}/_" || fail "Unable to download binary from ${binary_url} to ${temporary_file_path}\n"
 
-  tar --extract --verbose --gunzip --file "${temporary_file_path}/_" -C "$temporary_file_path" || fail "Unable to extract binary\n"
+  tar --extract --verbose --gunzip --file "${temporary_file_path}/_" -C "$temporary_file_path" || fail "Unable to extract binary from ${temporary_file_path}\n"
 
   local installation_directory
-  installation_directory=$(dirname "${installation_location}")
-  if [[ $? -ne 0 ]]; then fail "Could not identify installation directory for: ${installation_location}\n"; fi
+  
+  if ! installation_directory=$(dirname "${installation_location}"); then fail "Could not identify installation directory for: ${installation_location}\n"; fi
 
   mkdir -p "${installation_directory}" || fail "Could not create directory at path: ${installation_directory}\n"
 
