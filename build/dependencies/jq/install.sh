@@ -11,16 +11,15 @@ install_jq() {
   command -v "curl" &> /dev/null || fail "curl command does not exist\n"
 
   local temporary_file_path
-  temporary_file_path="/tmp/$(uuidgen)"
-  if [[ $? -ne 0 ]]; then fail "Could not generate temporary file path\n"; fi
+  
+  if ! temporary_file_path="/tmp/$(uuidgen)"; then fail "Could not generate temporary file path\n"; fi
 
   touch "${temporary_file_path}" || fail "Could not create temporary file at path: ${temporary_file_path}\n"
 
   curl --silent --location "${jq_binary_url}"  --output "${temporary_file_path}" || fail "Could not fetch jq binary: ${jq_binary_url}\n"
 
   local installation_directory
-  installation_directory=$(dirname "${installation_location}")
-  if [[ $? -ne 0 ]]; then fail "Could not identify installation directory for: ${installation_location}\n"; fi
+  if ! installation_directory=$(dirname "${installation_location}"); then fail "Could not identify installation directory for: ${installation_location}\n"; fi
 
   mkdir -p "${installation_directory}" || fail "Could not create directory at path: ${installation_directory}\n"
 

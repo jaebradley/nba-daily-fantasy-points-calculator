@@ -13,8 +13,8 @@ verify_shellcheck_version() {
   if [[ ! -x "${shellcheck_path}" ]]; then fail "shellcheck program at ${shellcheck_path} is not executable"; fi
 
   local shellcheck_version
-  shellcheck_version=$("${shellcheck_path}" --version | sed -n "2,2p" | cut -d' ' -f2)
-  if [[ 0 -ne $? ]]; then fail "Could not calculate version for shellcheck program at ${shellcheck_path}"; fi
+  
+  if ! shellcheck_version=$("${shellcheck_path}" --version | sed -n "2,2p" | cut -d' ' -f2); then fail "Could not calculate version for shellcheck program at ${shellcheck_path}"; fi
   if [[ "${shellcheck_version}" != "${expected_version}" ]]; then fail "Shellcheck version: ${shellcheck_version} was not equal to the expected version: ${expected_version}"; fi
 }
 

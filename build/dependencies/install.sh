@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2091
 
 . "$(dirname "${BASH_SOURCE[0]}")/../../utilities/error.sh" || exit 255
 
@@ -15,15 +16,14 @@ install_dependencies() {
   local -r shellcheck_binary_path="$3"
   local -r expected_shellcheck_version="$4"
 
-  $(verify_shellcheck_version "${shellcheck_binary_path}" "${expected_shellcheck_version}") &> /dev/null
-  if [[ 0 -ne $? ]];
+
+  if ! $(verify_shellcheck_version "${shellcheck_binary_path}" "${expected_shellcheck_version}") &> /dev/null
   then
     rm -f "${shellcheck_binary_path}" || fail "Failed to delete shellcheck program at ${shellcheck_binary_path}"
     install_shellcheck "https://github.com/koalaman/shellcheck/releases/download/v${expected_shellcheck_version}/shellcheck-v${expected_shellcheck_version}.darwin.x86_64.tar.xz" "${shellcheck_binary_path}" || fail "Failed to install shellcheck program"
   fi
 
-  $(verify_jq_version "${jq_binary_path}" "${expected_jq_version}")
-  if [[ 0 -ne $? ]];
+  if ! $(verify_jq_version "${jq_binary_path}" "${expected_jq_version}") &> /dev/null
   then
     rm -f "${jq_binary_path}" || fail "Failed to delete jq binary at ${jq_binary_path}\n"
     install_jq "https://github.com/stedolan/jq/releases/download/${expected_jq_version}/jq-osx-amd64" "${jq_binary_path}" || fail "Failed to install jq binary\n"
