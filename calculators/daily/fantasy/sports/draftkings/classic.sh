@@ -28,6 +28,6 @@ calculate_classic_points() {
     double_digit_categories_bonus=3
   fi
 
-  bc <<< "scale=4; ${points}+(${three_pointers_made}*0.5)+(${rebounds}*1.25)+(${assists}*1.5)+(${steals}*2)+(${blocks}*2)-(${turnovers}*0.5)+(${double_digit_categories_bonus}*1.5)" || fail "Unable to calculate points for values: $@"
+  bc <<< "scale=4; ${points}+(${three_pointers_made}*0.5)+(${rebounds}*1.25)+(${assists}*1.5)+(${steals}*2)+(${blocks}*2)-(${turnovers}*0.5)+(${double_digit_categories_bonus}*1.5)" || fail "Unable to calculate points for values: $*"
 }
 
