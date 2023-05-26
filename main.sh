@@ -10,8 +10,7 @@
 
 calculate_nba_draftkings_points_for_day() {
   local file_directory
-  file_directory=$(dirname "${BASH_SOURCE[0]}")
-  if [[ 0 -ne $? ]]; then fail "Unable to calculate current file directory\n"; fi
+  if ! file_directory=$(dirname "${BASH_SOURCE[0]}"); then fail "Unable to calculate current file directory\n"; fi
 
   if [[ $# -eq 3 ]]; then
     jq_executable_path="${file_directory}/.dependencies/bin/jq"
@@ -28,17 +27,15 @@ calculate_nba_draftkings_points_for_day() {
   if [[ ! -f "${jq_executable_path}" ]]; then fail "jq program at the following path: ${jq_executable_path} is not a regular file\n"; fi
   if [[ ! -x "${jq_executable_path}" ]]; then fail "jq program at the following path: ${jq_executable_path} is not executable\n"; fi
 
-  while IFS=$"\n", read -r -a game_id
+  while IFS=$'\n', read -r game_id
   do
     while IFS=$",", read -r -a player_boxscore
     do
       local fantasy_points
-      fantasy_points=$(calculate_classic_points "${player_boxscore[@]:2}")
-      if [[ $? -ne 0 ]]; then fail "Could not calculate fantasy points for player with the following boxscore: ${player_boxscore}\n"; fi
+      if fantasy_points=$(calculate_classic_points "${player_boxscore[@]:2}"); then fail "Could not calculate fantasy points for player with the following boxscore: ${player_boxscore[*]}\n"; fi
 
       local row
-      row=$(format_output_row "${player_boxscore[0]}" "${fantasy_points}" "${player_boxscore[1]}")
-      if [[ $? -ne 0 ]]; then fail "Could not format row for player with the following boxscore: ${player_boxscore}\n"; fi
+      if ! row=$(format_output_row "${player_boxscore[0]}" "${fantasy_points}" "${player_boxscore[1]}"); then fail "Could not format row for player with the following boxscore: ${player_boxscore[*]}\n"; fi
 
       printf "%b" "${row}\n"
     done  < <(fetch_boxscore_data "${game_id}" | parse_boxscore_data "${jq_executable_path}")

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")/../../../../../utilities/error.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/../../../../../utilities/error.sh" || exit 255
 . "$(dirname "${BASH_SOURCE[0]}")/../../../../../data/formatters/output/row.sh" || fail "Could not import output row formatter"
 
 compare() {
@@ -10,10 +10,9 @@ compare() {
   local -r player_status="$4"
 
   local formatted_output
-  format_output=$(format_output_row "${player_name}" "${points}" "${player_status}")
-  if [[ $? -ne 0 ]]; then fail "Could not format row\n"; fi
+  if ! formatted_output=$(format_output_row "${player_name}" "${points}" "${player_status}"); then fail "Could not format row\n"; fi
 
-  if [[ "${expected}" != "${format_output}" ]]; then fail "Expected ${expected} but got ${format_output} instead"; fi
+  if [[ "${expected}" != "${formatted_output}" ]]; then fail "Expected ${expected} but got ${formatted_output} instead"; fi
 }
 
 main() {

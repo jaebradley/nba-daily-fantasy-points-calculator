@@ -24,10 +24,10 @@ main() {
   if ! fetch_games_for_day "2023" "03" "26" &> "${temporary_file_name}"; then fail "Failed to fetch games for day\n"; fi
 
   local fetched_data
-  if ! fetched_data=$(cat "${temporary_file_name}" | "${jq_executable_path}" ".scoreboard"); then fail "Failed to parse static portion of fetched data\n"; fi
+  if ! fetched_data=$("${jq_executable_path}" ".scoreboard" < "${temporary_file_name}"); then fail "Failed to parse static portion of fetched data\n"; fi
 
   local expected_data
-  if ! expected_data=$(cat "${expected_scoreboard_data_file_path}" | "${jq_executable_path}" ".scoreboard"); then fail "Failed to read file ${expected_scoreboard_data_file_path}\n"; fi
+  if ! expected_data=$("${jq_executable_path}" ".scoreboard" < "${expected_scoreboard_data_file_path}"); then fail "Failed to read file ${expected_scoreboard_data_file_path}\n"; fi
   if [[ "${fetched_data}" != "${expected_data}" ]]; then fail "Difference exists between ${temporary_file_name} and ${expected_scoreboard_data_file_path}\n"; fi
 }
 
