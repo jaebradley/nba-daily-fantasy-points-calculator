@@ -20,4 +20,4 @@ build() {
   lint_sh_files "${shellcheck_path}" "${linting_directory_path}" || fail "Failed to lint files in ${linting_directory_path}"
 }
 
-build "$(dirname "${BASH_SOURCE[0]}")/../.dependencies/bin/jq" "jq-1.6" "$(dirname "${BASH_SOURCE[0]}")/../.dependencies/bin/shellcheck" "0.9.0" "$(dirname "${BASH_SOURCE[0]}")/../tests" "$(dirname "${BASH_SOURCE[0]}")/"
+build "$(dirname "${BASH_SOURCE[0]}")/../.dependencies/bin/jq" "jq-1.6" "$(dirname "${BASH_SOURCE[0]}")/../.dependencies/bin/shellcheck" "0.9.0" "$(dirname "${BASH_SOURCE[0]}")/../tests" "$(dirname "${BASH_SOURCE[0]}")/../"
