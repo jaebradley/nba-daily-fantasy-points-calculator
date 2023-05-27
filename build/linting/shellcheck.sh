@@ -10,7 +10,7 @@ lint_sh_files() {
 
   find "${directory_path}" -type f -name "*.sh" -print0 | xargs -0 -I {} "${shellcheck_path}" {}
 
-  if [[ "${PIPESTATUS[0]}" -ne "0" && "${PIPESTATUS[1]}" -ne "0" ]]
+  if [[ "${PIPESTATUS[0]}" -ne "0" || "${PIPESTATUS[1]}" -ne "0" ]]
   then
     fail "Could not successfully lint all .sh files in ${directory_path}\n";
   fi
