@@ -15,7 +15,7 @@ main() {
 
   for input_file_name in "${input_file_names[@]}"
   do
-    local input_file_path="${current_directory}/../boxscores/${input_file_name}.json"
+    local input_file_path="${current_directory}/../../../data/expected/boxscores/${input_file_name}.json"
     if [[ ! -f "${input_file_path}" ]]; then fail "Input file at ${input_file_path} is not a regular file\n"; fi
     if [[ ! -r "${input_file_path}" ]]; then fail "Input file at ${input_file_path} is not readable\n"; fi
 

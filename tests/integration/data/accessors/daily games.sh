@@ -11,7 +11,7 @@ main() {
   local -r jq_executable_path="${current_directory}/../../../../.dependencies/bin/jq"
   if [[ ! -x "${jq_executable_path}" ]]; then fail "Could not execute jq program at ${jq_executable_path}"; fi
 
-  local -r expected_scoreboard_data_file_path="${current_directory}/../scoreboard/finished games.json"
+  local -r expected_scoreboard_data_file_path="${current_directory}/../../../data/expected/scoreboard/finished games.json"
   if [[ ! -f "${expected_scoreboard_data_file_path}" ]]; then fail "Expected output file at ${expected_scoreboard_data_file_path} is not a regular file\n"; fi
   if [[ ! -r "${expected_scoreboard_data_file_path}" ]]; then fail "Expected output file at ${expected_scoreboard_data_file_path} is not readable\n"; fi
 

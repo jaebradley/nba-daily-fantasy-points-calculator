@@ -8,9 +8,9 @@ main() {
   if ! boxscore_data=$(fetch_boxscore_data "0022201201"); then fail "Failed to fetch boxscore data\n"; fi
 
   local expected_boxscore_data
-  if ! expected_boxscore_data=$(cat "$(dirname "${BASH_SOURCE[0]}")/../boxscores/0022201201.json"); then fail "Unable to read expected boxscore data\n"; fi
+  if ! expected_boxscore_data=$(cat "$(dirname "${BASH_SOURCE[0]}")/../../../data/expected/boxscores/0022201201.json"); then fail "Unable to read expected boxscore data\n"; fi
 
-  if [[ "${boxscore_data}" != "${expected_boxscore_data}" ]]; then printf "Expected boxscore data is not equal to fetched boxscore data\n" && exit 255; fi
+  if [[ "${boxscore_data}" != "${expected_boxscore_data}" ]]; then fail "Expected boxscore data is not equal to fetched boxscore data\n"; fi
 }
 
 main

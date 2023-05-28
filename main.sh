@@ -32,7 +32,7 @@ calculate_nba_draftkings_points_for_day() {
     while IFS=$",", read -r -a player_boxscore
     do
       local fantasy_points
-      if fantasy_points=$(calculate_classic_points "${player_boxscore[@]:2}"); then fail "Could not calculate fantasy points for player with the following boxscore: ${player_boxscore[*]}\n"; fi
+      if ! fantasy_points=$(calculate_classic_points "${player_boxscore[@]:2}"); then fail "Could not calculate fantasy points for player with the following boxscore: ${player_boxscore[*]}\n"; fi
 
       local row
       if ! row=$(format_output_row "${player_boxscore[0]}" "${fantasy_points}" "${player_boxscore[1]}"); then fail "Could not format row for player with the following boxscore: ${player_boxscore[*]}\n"; fi

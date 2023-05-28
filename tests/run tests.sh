@@ -9,7 +9,7 @@ run_tests() {
   local -r test_directory_path="$1"
   if [[ ! -d "${test_directory_path}" ]]; then fail "${test_directory_path} is not a directory\n"; fi
 
-  find "${test_directory_path}/unit" -type f -name "*.sh" -print0 | \
+  find "${test_directory_path}" -type f -name "*.sh" -print0 | \
     sort --zero-terminated | \
     while IFS= read -r -d '' file
     do 

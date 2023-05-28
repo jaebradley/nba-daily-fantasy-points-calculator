@@ -16,7 +16,12 @@ build() {
   local -r linting_directory_path="$6"
 
   install_dependencies "${jq_path}" "${expected_jq_version}" "${shellcheck_path}" "${expected_shellcheck_version}" || fail "Failed to install dependencies\n"
-  run_tests "${test_directory_path}" || fail "Failed to run tests in ${test_directory_path}\n"
+
+  local -r unit_test_directory_path="${test_directory_path}/unit"
+  run_tests "${unit_test_directory_path}" || fail "Failed to run unit tests in ${unit_test_directory_path}\n"
+
+  local -r integration_test_directory_path="${test_directory_path}/integration"
+  run_tests "${integration_test_directory_path}" || fail "Failed to run integration tests in ${integration_test_directory_path}\n"
   lint_sh_files "${shellcheck_path}" "${linting_directory_path}" || fail "Failed to lint files in ${linting_directory_path}"
 }
 
