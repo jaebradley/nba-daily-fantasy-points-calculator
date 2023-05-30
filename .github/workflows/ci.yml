@@ -1,7 +1,7 @@
 name: CI
 on: [push, pull_request]
 jobs:
-  unit-tests:
+  build:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
