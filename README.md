@@ -29,7 +29,7 @@ To set up this project locally
 
 ## Usage
 
-To use the calculator program, 
+To use the calculator program
 
 1. Checkout the repository
 2. Execute the following command in a terminal program (assumes the current directory is the project directory)
@@ -45,5 +45,32 @@ bash main.sh "2023" "05" "06" "/Users/MyUser/local/bin/jq"
 If you've executed the `build/execute.sh` program successfully (and installed the dependencies successfully), then the path to the `jq` program  can be omitted and the `jq` program located in the `.dependencies` directory will be used.
 
 ```bash
-bash main.sh "2023" "05" "06" 
+bash main.sh "2023" "05" "06"  | head -5
+
+# Prints the following lines to the terminal
+Bam Adebayo|35.00|ACTIVE
+Caleb Martin|8.25|ACTIVE
+Cody Zeller|14.00|ACTIVE
+DaQuan Jeffries|0|ACTIVE
+Derrick Rose|0|ACTIVE
+```
+
+## Combining this program with other tools
+
+### The 10 Players With The Most DraftKings DFS Points
+
+```bash
+bash main.sh "2023" "05" "06" | awk -F '|' '{ print $2, $1 }' | uniq | sort -gr | head -10
+
+# Prints the following lines to the terminal
+59.75 Anthony Davis
+46.00 LeBron James
+40.50 Jimmy Butler
+39.50 Jalen Brunson
+37.00 Stephen Curry
+36.50 Josh Hart
+36.25 Andrew Wiggins
+35.00 Bam Adebayo
+34.25 D'Angelo Russell
+30.00 Julius Randle
 ```
