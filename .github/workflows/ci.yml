@@ -2,7 +2,13 @@ name: CI
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: [macos-13, macos-12]
+    strategy:
+      matrix:
+        os: 
+          - macos-13
+          - macos-12
+          - macos-11
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
