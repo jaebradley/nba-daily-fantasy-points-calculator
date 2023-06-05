@@ -1,8 +1,17 @@
 name: CI
-on: [push, pull_request]
+on: 
+  push:
+  schedule:
+    - cron: '00 12 * * *'
 jobs:
   build:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os: 
+          - macos-13
+          - macos-12
+          - macos-11
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
