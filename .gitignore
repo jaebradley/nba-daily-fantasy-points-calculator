@@ -1,2 +1,5 @@
+# Ignore swap files, if developing with an editor like vim
 *.swp
+
+# Ignore the project dependency files where dependencies will be installed
 .dependencies/*
